@@ -6,12 +6,17 @@
   "author": "tiredwork",
   "type": "commonjs",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+"scripts": {
+    "start": "babel-node index.js",
+    "dev": "nodemon --exec npm start"
   },
+
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "nodemon": "^3.1.11"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3"
   }
 }
