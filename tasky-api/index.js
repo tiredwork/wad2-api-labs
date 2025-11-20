@@ -2,6 +2,8 @@ import dotenv from 'dotenv';
 import express from 'express';
 import tasksRouter from './api/tasks/index.js';
 import './db';
+import cors from 'cors';
+
 
 dotenv.config();
 
@@ -18,6 +20,8 @@ const errHandler = (err, req, res, next) => {
 const app = express();
 
 const port = process.env.PORT;
+
+app.use(cors());
 
 app.use(express.json());
 
