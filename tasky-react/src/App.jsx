@@ -1,6 +1,6 @@
 import './App.css';
 import Task from './components/Task';
-import AddTaskForm from './components/Form';
+import AddTaskForm from './components/Task';
 import React, { useState, useEffect } from 'react';
 import {getTasks, addTask, deleteTask, updateTask} from "./api/tasky-api";
 
