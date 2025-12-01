@@ -1,8 +1,9 @@
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Task from './components/Task';
 import AddTaskForm from './components/Task';
-import React, { useState, useEffect } from 'react';
 import {getTasks, addTask, deleteTask, updateTask} from "./api/tasky-api";
+
 
 function App() {
   
@@ -28,6 +29,7 @@ function App() {
     tasks[taskIndex].done = !tasks[taskIndex].done;
     updateTask(tasks[taskIndex]);
     setTaskState({tasks});
+    console.log(`${taskIndex} ${tasks[taskIndex].done}`);
   }
 
   const deleteHandler = (taskIndex) => {
@@ -37,6 +39,7 @@ function App() {
     deleteTask(id);
     setTaskState({tasks});
   }
+
 
   const formChangeHandler = (event) => {
     let form = {...formState};
@@ -53,7 +56,7 @@ function App() {
           break;
       case "priority":
           form.priority = event.target.value;
-          break;      
+          break;
       default:
           form = formState;
     }
@@ -84,8 +87,7 @@ function App() {
           deleteTask = {() => deleteHandler(index)}
         />
       ))}
-      <AddTaskForm submit={formSubmitHandler} change={formChangeHandler} />
-
+      <AddTaskForm submit={formSubmitHandler} change={formChangeHandler}/>
     </div>
   );
 }
