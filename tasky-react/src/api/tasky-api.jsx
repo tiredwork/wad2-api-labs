@@ -20,7 +20,7 @@ export const addTask = async(data) => {
 };
 
 export const deleteTask = async (id) => {
-    const res =  fetch(
+    const res = await fetch(
         `http://localhost:8080/api/tasks/${id}`,
         {
             method: 'DELETE'

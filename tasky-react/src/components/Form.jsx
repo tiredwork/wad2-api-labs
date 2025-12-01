@@ -1,38 +1,89 @@
-import React from "react";
+import React, { useState } from "react";
+import { addTask } from "../api/tasky-api";
 
 const AddTaskForm = (props) => {
+  const [formState, setFormState] = useState({
+    title: "",
+    description: "",
+    deadline: "",
+    priority: "low",
+  });
+
+  const formChangeHandler = (event) => {
+    const { name, value } = event.target;
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
+
+  const formSubmitHandler = async (event) => {
+    event.preventDefault();
+    const tasks = props.taskState.tasks ? [...props.taskState.tasks] : [];
+    const newTask = await addTask(formState);
+    tasks.push(newTask);
+    props.setTaskState({ tasks });
+
+    setFormState({
+      title: "",
+      description: "",
+      deadline: "",
+      priority: "low",
+    });
+  };
 
   return (
     <div>
-      <form onSubmit={props.submit}>
+      <form onSubmit={formSubmitHandler}>
         <label>
-            Task title:
-            <input type="text" name="title" required onChange={(event) => props.change(event)} />
+          Task title:
+          <input
+            type="text"
+            name="title"
+            value={formState.title}
+            required
+            onChange={formChangeHandler}
+          />
         </label>
-        <br/>
+        <br />
         <label>
-            Due date:
-            <input type="date" name="deadline" required onChange={(event) => props.change(event)} />
+          Due date:
+          <input
+            type="date"
+            name="deadline"
+            value={formState.deadline}
+            required
+            onChange={formChangeHandler}
+          />
         </label>
-        <br/>
+        <br />
         <label>
-            Details:
-            <input type="text" name="description" onChange={(event) => props.change(event)} />
+          Details:
+          <input
+            type="text"
+            name="description"
+            value={formState.description}
+            onChange={formChangeHandler}
+          />
         </label>
-        <br/>
+        <br />
         <label>
-            Priority:
-            <select name="priority" defaultValue="low" onChange={(event) => props.change(event)}>
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-            </select>
+          Priority:
+          <select
+            name="priority"
+            value={formState.priority}
+            onChange={formChangeHandler}
+          >
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
         </label>
-        <br/>
-            <input type="submit" value="Submit" />
-        </form>
+        <br />
+        <input type="submit" value="Submit" />
+      </form>
     </div>
-  )
+  );
 };
 
 export default AddTaskForm;
